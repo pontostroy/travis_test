@@ -22,13 +22,14 @@ jobs:
       - build:
         script: echo "done"
       - &test
+        name: 1
         env:
           - COUCHDB_USER=op   
           - COUCHDB_PASSWORD=op
           - MY_VAR=1
         script:
           - docker run -d --net=host couchdb:1.7.2 
-          - docker run -it --add-host=couchdb:127.0.0.1 alpine sh -c 'cd /usr && ls && echo $MY_VAR > /proc/1/fd/1'
+          - docker run -it --net=host --add-host=couchdb:127.0.0.1 alpine sh -c 'cd /usr && ls && echo $MY_VAR > /proc/1/fd/1'
       - <<: *test
         name: 2
         env:
