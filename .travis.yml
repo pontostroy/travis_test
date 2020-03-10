@@ -18,9 +18,9 @@ workflows:
               only: master
 
 jobs:
-   build:
-        script: echo "done"
    include:
+      - build:
+        script: echo "done"
       - &test
         env:
           - COUCHDB_USER=op   
