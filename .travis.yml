@@ -3,8 +3,20 @@ git:
   depth: 1
 
 jobs:
-  include:
-   - script: docker run -it alpine sh -c 'echo "1" > /proc/1/fd/1'
-     name: 1
-   - script: docker run -it alpine sh -c 'echo "2" > /proc/1/fd/1'
-     name: 2
+   include:
+      - &test
+        env:
+          - MY_VAR=1
+        script: docker run -it alpine sh -c 'cd /usr && ls && echo $MY_VAR > /proc/1/fd/1'
+      - <<: *test
+        name: 2
+        env:
+          - MY_VAR=2
+      - <<: *test
+        name: 3
+        env:
+          - MY_VAR=3
+
+
+
+
