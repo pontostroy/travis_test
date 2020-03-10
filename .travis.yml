@@ -19,7 +19,6 @@ workflows:
 
 jobs:
    build:
-      - build
         script: echo "done"
    include:
       - &test
