@@ -4,7 +4,7 @@ git:
 
 jobs:
   include:
-   - script: docker run -it alpint bash -c 'echo "1" > /proc/1/fd/1'
+   - script: docker run -it alpine sh -c 'echo "1" > /proc/1/fd/1'
      name: 1
-   - script: docker run -it alpint bash -c 'echo "2" > /proc/1/fd/1'
+   - script: docker run -it alpine sh -c 'echo "2" > /proc/1/fd/1'
      name: 2
