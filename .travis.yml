@@ -18,7 +18,7 @@ workflows:
               only: master
 
 jobs:
-   test:
+   include:
       - &test
         env:
           - COUCHDB_USER=op   
