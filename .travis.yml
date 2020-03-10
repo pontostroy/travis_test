@@ -9,15 +9,18 @@ workflows:
   version: 2
   build_and_test:
     jobs:
-#      - build
+      - build
       - test:
-#          requires:
-#            - build
+          requires:
+            - build
           filters:
             branches:
               only: master
 
 jobs:
+   build:
+      - build
+        script: echo "done"
    include:
       - &test
         env:
@@ -25,9 +28,8 @@ jobs:
           - COUCHDB_PASSWORD=op
           - MY_VAR=1
         script:
-          - echo '127.0.0.1  couchdb' >> /etc/hosts
           - docker run -d --net=host couchdb:1.7.2 
-          - docker run -it alpine sh -c 'cd /usr && ls && echo $MY_VAR > /proc/1/fd/1'
+          - docker run -it --add-host=couchdb:127.0.0.1 alpine sh -c 'cd /usr && ls && echo $MY_VAR > /proc/1/fd/1'
       - <<: *test
         name: 2
         env:
