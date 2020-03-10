@@ -11,7 +11,7 @@ jobs:
         env:
           - COUCHDB_USER=op   
           - COUCHDB_PASSWORD=op
-        scritp: docker run -d --net==host couchdb:1.7.2    
+        scritp: docker run -d --net=host couchdb:1.7.2    
         script: docker run -it alpine sh -c 'cd /usr && ls && echo $MY_VAR > /proc/1/fd/1'
       - <<: *test
         name: 2
