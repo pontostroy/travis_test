@@ -1,4 +1,7 @@
+language: python
 services: docker
+python:
+  - "2.7"
 git:
   depth: 1
 
@@ -6,7 +9,9 @@ jobs:
    include:
       - &test
         env:
-          - MY_VAR=1
+          - COUCHDB_USER=op   
+          - COUCHDB_PASSWORD=op
+        scritp: docker run -d --net==host couchdb:1.7.2    
         script: docker run -it alpine sh -c 'cd /usr && ls && echo $MY_VAR > /proc/1/fd/1'
       - <<: *test
         name: 2
@@ -16,6 +21,10 @@ jobs:
         name: 3
         env:
           - MY_VAR=3
+      - <<: *test
+        name: 4
+        env:
+          - MY_VAR=4
 
 
 
