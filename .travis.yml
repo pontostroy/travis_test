@@ -5,18 +5,29 @@ python:
 git:
   depth: 1
 
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+#      - build
+      - test:
+#          requires:
+#            - build
+          filters:
+            branches:
+              only: master
+
 jobs:
-   include:
+   test:
       - &test
         env:
           - COUCHDB_USER=op   
           - COUCHDB_PASSWORD=op
-        script: 
+          - MY_VAR=1
+        script:
+          - echo '127.0.0.1  couchdb' >> /etc/hosts
           - docker run -d --net=host couchdb:1.7.2 
           - docker run -it alpine sh -c 'cd /usr && ls && echo $MY_VAR > /proc/1/fd/1'
-        branches:
-          only:
-            - master
       - <<: *test
         name: 2
         env:
